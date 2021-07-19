@@ -1,11 +1,14 @@
-const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+const path = require("path");
+const rootDir = process.cwd();
 
 module.exports = {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(rootDir, "dist"),
     filename: "bundle.[contenthash:8].js",
     clean: true,
   },
@@ -26,7 +29,17 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../public/index.html"),
+      template: path.resolve(rootDir, "public/index.html"),
+    }),
+    // 复制静态资源到打包目录
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "*.js",
+          context: path.resolve(rootDir, "public/js"),
+          to: path.resolve(rootDir, "dist/js"),
+        },
+      ],
     }),
   ],
 };
