@@ -24,6 +24,10 @@ module.exports = {
         use: ["style-loader", "css-loader", "less-loader", "sass-loader"],
         exclude: /node_modules/,
       },
+      {
+        test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
+        type: 'asset',
+      }
     ],
   },
   plugins: [
