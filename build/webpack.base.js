@@ -14,11 +14,11 @@ module.exports = {
     path: path.resolve(rootDir, "dist"),
     filename: "bundle.[contenthash:8].js",
   },
-  resolve:{
-    alias:{
-        '@':path.resolve(rootDir,'src'),
-        'pub':path.resolve(rootDir,'public')
-    }
+  resolve: {
+    alias: {
+      "@": path.resolve(rootDir, "src"),
+      pub: path.resolve(rootDir, "public"),
+    },
   },
   module: {
     rules: [
@@ -29,13 +29,26 @@ module.exports = {
       },
       {
         test: /\.(le|c|sc)ss$/,
-        use: ["style-loader", "css-loader", "less-loader", "sass-loader"],
+        use: [
+          "style-loader",
+          "css-loader",
+          "less-loader",
+          "sass-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [["autoprefixer"]],
+              },
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
         test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
-        type: 'asset',
-      }
+        type: "asset",
+      },
     ],
   },
   plugins: [
@@ -52,6 +65,6 @@ module.exports = {
           to: path.resolve(rootDir, "dist/js"),
         },
       ],
-    })
+    }),
   ],
 };
