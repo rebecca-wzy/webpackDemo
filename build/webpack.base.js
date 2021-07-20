@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
 
 const path = require("path");
 //process.cwd() 返回 Node.js 进程的当前工作目录
@@ -70,6 +71,8 @@ module.exports = {
     //打包后抽离 css 文件
     new MiniCssExtractPlugin({
         filename: 'css/[name].css'
-    })
+    }),
+    //压缩打包后的 css 文件
+    new OptimizeCssPlugin()
   ],
 };
