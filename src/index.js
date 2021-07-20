@@ -1,7 +1,8 @@
 import "./index.css";
 import "./index.less";
 import "./index.scss";
-import caishenye from "../public/assets/money.gif";
+// import caishenye from "../public/assets/money.gif";
+import caishenye from "pub/assets/money.gif";
 
 class Test {
   constructor() {
@@ -24,3 +25,6 @@ class Test {
 }
 
 new Test();
+
+console.log(process.cwd)
+console.log(path)

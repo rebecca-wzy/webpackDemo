@@ -3,14 +3,22 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const path = require("path");
+//process.cwd() 返回 Node.js 进程的当前工作目录
+//path.resolve('.')和process.cwd()返回路径相同
 const rootDir = process.cwd();
+//__dirname 总是指向被执行 js 文件的绝对路径
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(rootDir, "dist"),
     filename: "bundle.[contenthash:8].js",
-    clean: true,
+  },
+  resolve:{
+    alias:{
+        '@':path.resolve(rootDir,'src'),
+        'pub':path.resolve(rootDir,'public')
+    }
   },
   module: {
     rules: [
@@ -44,6 +52,6 @@ module.exports = {
           to: path.resolve(rootDir, "dist/js"),
         },
       ],
-    }),
+    })
   ],
 };
