@@ -1,8 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssPlugin = require('optimize-css-assets-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssPlugin = require("optimize-css-assets-webpack-plugin");
 
 const path = require("path");
 //process.cwd() 返回 Node.js 进程的当前工作目录
@@ -11,7 +11,7 @@ const rootDir = process.cwd();
 //__dirname 总是指向被执行 js 文件的绝对路径
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   output: {
     path: path.resolve(rootDir, "dist"),
     filename: "bundle.[contenthash:8].js",
@@ -21,12 +21,18 @@ module.exports = {
       "@": path.resolve(rootDir, "src"),
       pub: path.resolve(rootDir, "public"),
     },
+    extensions: [".tsx", ".ts", ".js"],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         use: "babel-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts$/,
+        use: ["babel-loader","ts-loader"],
         exclude: /node_modules/,
       },
       {
@@ -70,9 +76,9 @@ module.exports = {
     }),
     //打包后抽离 css 文件
     new MiniCssExtractPlugin({
-        filename: 'css/[name].css'
+      filename: "css/[name].css",
     }),
     //压缩打包后的 css 文件
-    new OptimizeCssPlugin()
+    new OptimizeCssPlugin(),
   ],
 };
