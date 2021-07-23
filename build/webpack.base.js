@@ -11,7 +11,7 @@ const rootDir = process.cwd();
 //__dirname 总是指向被执行 js 文件的绝对路径
 
 module.exports = {
-  entry: "./src/index.ts",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(rootDir, "dist"),
     filename: "bundle.[contenthash:8].js",
@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.ts$/,
-        use: ["babel-loader","ts-loader"],
+        use: ["babel-loader", "ts-loader"],
         exclude: /node_modules/,
       },
       {
@@ -56,6 +56,17 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
         type: "asset",
+        parser: {
+          //当小于10kb时转成base64，否则生成文件
+          //转成base64是为了减少http请求，转为base64以后小图片可以跟js同时被加载到浏览器，
+          //而不需要多次对服务器发出图片资源请求,但体积会变大约1/3左右
+          dataUrlCondition: {
+            maxSize: 10 * 1024,
+          },
+        },
+        generator: {
+          filename: "img/[name].[hash:7][ext]",
+        },
       },
     ],
   },
