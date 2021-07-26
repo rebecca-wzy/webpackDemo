@@ -1,5 +1,4 @@
 var n = 6
-console.log(88)
 fn(n)
 
 function fn(n){

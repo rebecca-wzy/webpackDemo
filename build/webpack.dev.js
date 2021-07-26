@@ -6,6 +6,8 @@ const baseConfig = require("./webpack.base");
 
 module.exports = merge(baseConfig, {
   mode: "development",
+  //解决加了browserslist导致devServe热更新不能自动刷新浏览器的bug
+  target: "web",
   //精确定位报错信息所在代码位置
   devtool: "eval-cheap-module-source-map",
   cache: {
